@@ -1,0 +1,93 @@
+print("Estas encerrado en una habitacion")
+
+vidas = 3
+inventario = []
+escapaste = False
+
+def mostrar_menu():
+    print("1. Revisar escritorio")
+    print("2. Revisar armario")
+    print("3. Revisar computadora")
+    print("4. Intentar abrir la puerta")
+    print("5. Ver inventario")
+
+def escritorio():
+    print("Estas revisando el escritorio...")
+    if "llave" in inventario:
+        print("Ya buscaste aqui, no hay nada nuevo.")
+    else:
+        inventario.append("llave")
+        print("Encontraste una llave!")
+
+def armario():
+    print("Estas revisando el armario...")
+    if "tarjeta" in inventario:
+        print("Ya buscaste aqui, no hay nada nuevo.")
+    else:
+        if "llave" in inventario:
+            print("Usaste la llave y abriste el armario. Encontraste una tarjeta de acceso!")
+            inventario.append("tarjeta")
+        else:
+            print("El armario esta cerrado. Necesitas una llave.")
+
+def computadora():
+    print("Estas revisando la computadora...")
+    if "pista" in inventario:
+        print("Ya buscaste aqui, no hay nada nuevo.")
+    else:
+        if "tarjeta" not in inventario:
+            print("La computadora esta bloqueada. Necesitas una tarjeta de acceso.")
+        else:
+            print("La computadora se desbloqueo. Aqui hay un acertijo:")
+            print("¿Cuanto es 5 + 5?")
+            respuesta = input("Escribe tu respuesta: ")
+            if respuesta == "10":
+                print("Correcto! Bien hecho.")
+                print("La pista es: el codigo de la puerta es 9876")
+                inventario.append("pista")
+            else:
+                print("Respuesta incorrecta.")
+                global vidas
+                vidas = vidas - 1
+                print("Perdiste una vida.")
+
+def abrir_puerta():
+    if "pista" not in inventario:
+        print("Todavia necesitas encontrar mas informacion.")
+    else:
+        codigo = input("Introduce el codigo de la puerta: ")
+        if codigo == "9876":
+            print("Codigo correcto! La puerta se abrio.")
+            print("Lograste escapar del laboratorio!")
+            global escapaste
+            escapaste = True
+        else:
+            print("Codigo incorrecto.")
+            global vidas
+            vidas = vidas - 1
+            print("Perdiste una vida.")
+
+# Ciclo principal del juego
+while vidas > 0 and escapaste == False:
+    print("\n--- Vidas restantes:", vidas, "---")
+    mostrar_menu()
+    opcion = input("Elige una opcion (1-5): ")
+
+    if opcion == "1":
+        escritorio()
+    elif opcion == "2":
+        armario()
+    elif opcion == "3":
+        computadora()
+    elif opcion == "4":
+        abrir_puerta()
+    elif opcion == "5":
+        print("Inventario:", inventario)
+    else:
+        print("Opcion no valida. Intenta de nuevo.")
+
+# Final del juego
+if vidas == 0:
+    print("\nGAME OVER. Se te acabaron las vidas.")
+elif escapaste == True:
+    print("\nFelicidades, escapaste de la habitacion!¨)

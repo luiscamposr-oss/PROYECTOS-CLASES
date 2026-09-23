@@ -1,0 +1,6 @@
+from whalesbot import *
+
+patrol_integrated_initialization(A,100,B,-100)
+patrol_single_initialization(A,100,B,-100,P1,P2,P3,P4,P5)
+
+patrol_road(intersection_T,30,0)
